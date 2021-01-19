@@ -1,0 +1,19 @@
+data <- read.table("input",header=TRUE ,row.names= NULL)
+d<- as.matrix(data[, -1],sep="\t",header=T,row.names=1)
+dim(d)
+library(gplots)
+
+jpeg("output2.jpeg",unit="in",res=300,height=30,width=30)
+rownames(d) <- data$Gene
+
+heatmap.2 (d,Colv=FALSE) -> heat_d 
+
+dev.off()
+
+
+write.table(
+  data.frame(gene = rownames(data)[heat_d$rowInd]),
+  'out.csv',
+  row.names = FALSE,
+  quote = FALSE,
+  sep = ',')
